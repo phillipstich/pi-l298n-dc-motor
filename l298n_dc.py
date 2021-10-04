@@ -4,19 +4,37 @@
 import RPi.GPIO as GPIO          
 from time import sleep
 
-in1 = 24
-in2 = 23
-en = 25
+## defining which pins to use
+in1 = 24  ## << connect to in1 on your motor board
+in2 = 23  ## << connect to in2 on your motor board
+en  = 25  ## << connect to the enable A pin on your motor board
+
 temp1=1
 
+##
 GPIO.setmode(GPIO.BCM)
+
+## this is setting the GPIO pins defined above
+##   to be output pins (for writting)
 GPIO.setup(in1,GPIO.OUT)
 GPIO.setup(in2,GPIO.OUT)
 GPIO.setup(en,GPIO.OUT)
+##   GPIO.IN would be reading , like from a sensor
+
+
+## initially set in1 (pin-24) and in2 (pin-23) to low
 GPIO.output(in1,GPIO.LOW)
 GPIO.output(in2,GPIO.LOW)
+
+## set pin-25 as pulse with modulation with a frequency of 1000 pulses
+##   GPIO.PWM(output channel , frequency of PWM signal)
+##   see https://circuitdigest.com/microcontroller-projects/raspberry-pi-pwm-tutorial
 p=GPIO.PWM(en,1000)
 
+## this sets the duty cycle or ration of on to off pulse
+##   i think that this sets the speed
+##   so 25 or 25% should be slow
+##   then 100 would be fast
 p.start(25)
 print("\n")
 print("The default speed & direction of motor is LOW & Forward.....")
